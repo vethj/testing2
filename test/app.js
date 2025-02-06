@@ -63,8 +63,9 @@ app.get("/login", (req, res) => {
 app.post("/login", async (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
-
+    
     const auth = await authenticateUser(email, password);
+    console.log(auth);
 
     // Checks is the function authenticateUser returned true or false, if true we are directed to dashboard. If not we go back to login
     if (auth) {

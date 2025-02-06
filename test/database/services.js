@@ -27,7 +27,7 @@ async function addUser(email, password) {
 
 async function authenticateUser(email, password) {
     const connection = await createConnection();
-
+    
     connection.connect();
 
     const query = "SELECT * FROM user WHERE email = ?;";
@@ -36,9 +36,9 @@ async function authenticateUser(email, password) {
 
     const match = await bcrypt.compare(password, user.password);
 
-    console.log(user.address);
+
     if (match) {
-        return { success: true, email: user.email, address: user.address };
+        return { success: true, email: user.email, address: user.address  };
     }
     connection.end();
 }
