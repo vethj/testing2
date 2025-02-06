@@ -68,14 +68,15 @@ app.post("/login", async (req, res) => {
 
     // Checks is the function authenticateUser returned true or false, if true we are directed to dashboard. If not we go back to login
     if (auth) {
-        req.session.user = auth.user;
+        req.session.email = auth.email;
+        req.session.address = auth.address;
         return res.redirect("/dashboard");
     }
     return res.redirect("/login");
 });
 
 function isAuthenticated(req, res, next) {
-    if (req.session.user) {
+    if (req.session.email) {
         next();
     } else {
         req.session.error = "Access denied!";
@@ -84,7 +85,10 @@ function isAuthenticated(req, res, next) {
 }
 
 app.get("/dashboard", isAuthenticated, (req, res) => {
-    res.render("dashboard");
+    res.render("dashboard", {
+        email: req.session.email,
+        address: req.session.address,
+    });
 });
 
 app.listen(port, () => {
